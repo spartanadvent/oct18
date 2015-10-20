@@ -2,7 +2,10 @@ var github_token;
 var github_connection;
 var repo;
 var current_element;
+var show_time;
 var user_gists;
+var reading_rainbow;
+var gist;
 //bota to encode
 //atob to decode
 var current_user;
@@ -13,7 +16,7 @@ function github_callback(error, response) {
         //return parameter or return zero as stored value
         error = error || 0;
         response = response || 0;
-        log(response);
+
 }
 
 function github_token_created(token_value) {
@@ -26,7 +29,7 @@ function github_token_created(token_value) {
 function time_out_ready() {
 
    my_time = setTimeout(github_callback, 1000);
-
+        log(my_time);
 }
 
 
@@ -34,12 +37,30 @@ function time_out_ready() {
 
 function create_element(element_name) {
 
-  return  current_element = document.createElement(element_name)
+   current_element = document.createElement(element_name)
         document.body.appendChild(current_element);
 
 }
 
+function show_information (username) {
 
+
+        show_time = current_user.show(username,github_callback);
+            log(show_time);
+}
+
+
+function notifications_to_read() {
+
+    notify_me = current_user.notifications(github_callback);
+            log(notify_me);
+}
+
+function read_it() {
+
+    reading_rainbow = gist.read(github_callback)
+
+}
 
 
 function log(message){
@@ -75,21 +96,17 @@ document.addEventListener('readystatechange',function(event){
               token: github_token_created(),
               auth: "oauth"
             });
-
+                log(this);
             //going into user github and grabing the user information
 
          current_user = github_connection.getUser();
 
-         //grabing the user gists file as an object
+         //able to get the gist to pull up but will not get the data
+         gist = github_connection.getGist('b91058f51777485a23ad');
+            log(gist);
 
-         user_gists = current_user.userGists('epscgeekwiseme',github_callback);
-
-         //trying to grab objects out of gists and push them to the ordered list
-
-        current_element.innertext = user_gists.
-
-
-
+           read_it();
+            log(read_it());
 
     };
 
