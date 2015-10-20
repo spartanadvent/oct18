@@ -10,13 +10,14 @@ var gist;
 //atob to decode
 var current_user;
 //var current_user =  github_connection.getUser();
+var object_id = "6385ac4d7b6b2c5b8c83"
 
 function github_callback(error, response) {
         //allow for optional parameters to fail gracefully
         //return parameter or return zero as stored value
         error = error || 0;
         response = response || 0;
-
+            log(response);
 }
 
 function github_token_created(token_value) {
@@ -28,7 +29,7 @@ function github_token_created(token_value) {
 
 function time_out_ready() {
 
-   my_time = setTimeout(github_callback, 1000);
+   my_time = setTimeout(github_callback, 2000);
         log(my_time);
 }
 
@@ -58,7 +59,7 @@ function notifications_to_read() {
 
 function read_it() {
 
-    reading_rainbow = gist.read(github_callback)
+   return reading_rainbow = gist.read(github_callback)
 
 }
 
@@ -96,20 +97,32 @@ document.addEventListener('readystatechange',function(event){
               token: github_token_created(),
               auth: "oauth"
             });
-                log(this);
+
             //going into user github and grabing the user information
 
          current_user = github_connection.getUser();
+           log(github_connection.getUser());
 
+         //grabing the user gists file as an object
+
+//         user_gists = current_user.userGists('epscgeekwiseme',github_callback);
+//                        log(user_gists);
+//         //trying to grab objects out of gists and push them to the ordered list
+//
+
+           user_gist = current_user.gists(github_callback);
+
+                time_out_ready();
          //able to get the gist to pull up but will not get the data
-         gist = github_connection.getGist('b91058f51777485a23ad');
+         gist = github_connection.getGist(object_id);
             log(gist);
+//
+          user_gist.read(github_callback());
 
-           read_it();
-            log(read_it());
+                log(user_gist.read(github_callback()));
+
 
     };
-
 
 
 
